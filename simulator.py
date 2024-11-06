@@ -1,9 +1,12 @@
 import pygame as pg
 from particle import Particle
 
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 800
+
 pg.init()
 
-window = pg.display.set_mode((800, 800))
+window = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pg.time.Clock()
 font = pg.font.SysFont("Arial", 30)
 
@@ -13,7 +16,7 @@ charge_index = 0
 default_radius = 15
 
 charges = [-1, 0, 1]
-classes = ["electron", "neutron", "proton"]
+classes = ["Electron", "Neutron", "Proton"]
 
 simulating = False
 
@@ -39,13 +42,22 @@ while running:
     
     window.fill((0, 0, 0))
 
-    # Draw text
+    # Draw text to show selected particle
     text = font.render(classes[charge_index], False, (255, 255, 255))
     window.blit(text, (0, 0))
 
+    # Draw text to show status of simulation
+    if not simulating:
+        text = font.render("Paused", False, (255, 255, 255))
+        window.blit(text, (SCREEN_WIDTH - 100, 0))
+
     if simulating:
-        for particle in particles:
-            particle.update_velocity(particles, dt)
+        for i, particle in enumerate(particles):
+            # Stops rendering particles that are far off screen
+            if particle.active:
+                particle.update_velocity(particles, dt)
+            else:
+                particles.pop(i)
 
     for particle in particles:
         particle.draw(window)

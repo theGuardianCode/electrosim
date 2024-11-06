@@ -16,6 +16,8 @@ class Particle:
 
         self.vel = pg.Vector2(0, 0)
         self.prev_pos = self.pos
+
+        self.active = True
     
     def will_collide(self, pos, particles):
         for particle in particles:
@@ -50,3 +52,7 @@ class Particle:
                 if not self.will_collide(new_pos, particles):
                     self.prev_pos = self.pos
                     self.pos = new_pos
+                
+        # Check if particle is far from screen center
+        if (self.pos - pg.Vector2(400, 400)).magnitude() > 1000:
+            self.active = False
