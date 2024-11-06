@@ -30,7 +30,6 @@ while running:
                 particles.append(Particle(pg.Vector2(mouse_pos[0], mouse_pos[1]), default_radius, charges[charge_index]))
             elif pg.mouse.get_pressed()[2]:
                 charge_index = (charge_index + 1) % 3
-                print(charge_index)
         
         if event.type == pg.KEYDOWN:
             if event.key == pg.K_SPACE:
@@ -47,9 +46,6 @@ while running:
     if simulating:
         for particle in particles:
             particle.update_velocity(particles, dt)
-
-        for particle in particles:
-            particle.update_position(particles, dt)
 
     for particle in particles:
         particle.draw(window)

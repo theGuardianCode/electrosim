@@ -15,6 +15,7 @@ class Particle:
             self.colour = (211, 211, 211)
 
         self.vel = pg.Vector2(0, 0)
+        self.prev_pos = self.pos
     
     def will_collide(self, pos, particles):
         for particle in particles:
@@ -42,9 +43,10 @@ class Particle:
                 force = 5 * abs(self.charge * particle.charge) / dst_sqr
 
                 acceleration = force_dir * force / abs(self.charge)
-                self.vel += acceleration * time_step
 
-    def update_position(self, particles, time_step):
-        new_pos = self.pos + (self.vel * time_step)
-        if not self.will_collide(new_pos, particles):
-            self.pos = new_pos
+                # Verlet integration: x(t + dt) = 2x - x(t-dt) + a(t)(dt^2)
+                new_pos = 2 * self.pos - self.prev_pos + (acceleration * time_step * time_step)
+
+                if not self.will_collide(new_pos, particles):
+                    self.prev_pos = self.pos
+                    self.pos = new_pos
