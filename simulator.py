@@ -5,6 +5,7 @@ SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 800
 
 pg.init()
+pg.display.set_caption("Coloumb's Law Simulation")
 
 window = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pg.time.Clock()
