@@ -5,3 +5,4 @@ A simulator of electrostatics. You can place electrons, protons, and neutrons wh
 - **Right-click:** Cycles the particle that will be placed. Electron -> Neutron -> Proton.
 - **Space:** Pause and resume the simulation.
 - **R:** Restart the simulation
+- **F:** Toggle moveable particles. Particles placed when fixed is on will not move from their origin.

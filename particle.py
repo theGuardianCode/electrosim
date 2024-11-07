@@ -1,10 +1,11 @@
 import pygame as pg
 
 class Particle:
-    def __init__(self, pos, rad, charge):
+    def __init__(self, pos, rad, charge, moveable):
         self.pos = pos
         self.rad = rad
         self.charge = charge
+        self.moveable = moveable
 
         # Colour particles based on their charge
         if charge > 0:
@@ -29,6 +30,10 @@ class Particle:
     
     def draw(self, surface):
         pg.draw.circle(surface, self.colour, self.pos, self.rad)
+
+        # If particle is fixed draw green circle inside
+        if self.moveable == False:
+            pg.draw.circle(surface, (0, 200, 0), self.pos, self.rad / 4)
 
     def update_velocity(self, particles, time_step):
         for particle in particles:
